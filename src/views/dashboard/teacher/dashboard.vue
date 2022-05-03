@@ -177,7 +177,7 @@ export default {
   methods: {
     methods: {
       handleChange(val) {
-        console.log(val)
+        // console.log(val)
       }
     },
     initChart() {

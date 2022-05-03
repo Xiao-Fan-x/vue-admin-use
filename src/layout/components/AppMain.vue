@@ -1,7 +1,8 @@
 <template>
   <section class="app-main">
     <transition name="fade-transform" mode="out-in">
-      <keep-alive :include="cachedViews">
+      <keep-alive v-bind:include="cachedViews">
+<!--        <router-view />-->
         <router-view :key="key" />
       </keep-alive>
     </transition>
@@ -12,12 +13,13 @@
 export default {
   name: 'AppMain',
   computed: {
-    key() {
-      return this.$route.path
-    },
     cachedViews() {
       return this.$store.state.tagsView.cachedViews
     },
+    key() {
+      return this.$route.path
+    },
+
   }
 }
 </script>

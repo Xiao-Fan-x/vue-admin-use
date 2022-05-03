@@ -14,7 +14,7 @@ export default {
   beforeMount() {
     window.addEventListener('resize', this.$_resizeHandler)
   },
-  beforeDestroy() {
+  beforeDestroy() {ResizeMixin
     window.removeEventListener('resize', this.$_resizeHandler)
   },
   mounted() {

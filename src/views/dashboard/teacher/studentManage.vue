@@ -115,6 +115,18 @@
         <el-button type="primary" @click="saveEdit">确 定</el-button>
       </span>
     </el-dialog>
+    <div class="block">
+      <span class="demonstration">完整功能</span>
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage4"
+        :page-sizes="[100, 200, 300, 400]"
+        :page-size="100"
+        layout="total, prev, pager, next, jumper"
+        :total="400">
+      </el-pagination>
+    </div>
   </div>
 </template>
 
@@ -140,7 +152,11 @@ export default {
         number: '',
         grade: ''
 
-      }
+      },
+      currentPage1: 5,
+      currentPage2: 5,
+      currentPage3: 5,
+      currentPage4: 4
     }
   },
   created() {
@@ -150,6 +166,12 @@ export default {
     this.getData()
   },
   methods: {
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+    },
     getData() {
       this.axios({
         method: 'post',
@@ -277,9 +299,6 @@ export default {
       this.$set(this.tableData, 'pageIndex', val)
       this.getData(val)
     },
-    handleSizeChange() {
-
-    }
   }
 }
 </script>

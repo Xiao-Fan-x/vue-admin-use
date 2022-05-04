@@ -107,22 +107,37 @@ export const constantRoutes = [
     path: '/',
     component: Layout,
     redirect: '/dashboard',
+    meta: {
+      roles: ['admin', 'editor']
+    },
     children: [{
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: {title: 'Dashboard', icon: 'dashboard', affix: true}
+      meta: {
+        title: 'Dashboard',
+        icon: 'dashboard',
+        affix: true,
+        roles: ['admin', 'editor']
+      }
     }]
   },
   {
     path: '/',
     component: Layout,
     redirect: '/qiniu',
+    meta: {
+      roles: ['admin', 'editor']
+    },
     children: [{
       path: 'qiniu',
       name: 'qiniu',
       component: () => import('@/views/qiniu/upload'),
-      meta: {title: 'upload', icon: 'dashboard', affix: false}
+      meta: {
+        title: 'upload',
+        icon: 'dashboard',
+        affix: false
+      }
     }]
   },
 
@@ -165,6 +180,7 @@ export const constantRoutes = [
   {
     path: '/teacher',
     component: Layout,
+    meta: {userRole: 'teacher'},
     children:
       [{
         path: '/StudentManager',
@@ -174,7 +190,7 @@ export const constantRoutes = [
           title: 'studentManager',
           icon: 'form',
           noCache: true,
-          // roles: 'teacher'
+          userRole: 'teacher'
         }
       }]
   },

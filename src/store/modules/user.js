@@ -10,8 +10,6 @@ const state = {
   roles: [],
   userId: '',
   userName: '',
-  gender: '',
-  password: '',
   phone: '',
   role: '',
   department: '',
@@ -72,7 +70,7 @@ const actions = {
         const {data} = response
 
         if (!data) {
-          reject('Verification failed, please Login again.')
+          reject('没有相关信息，请重新登陆！')
         }
 
         const {roles, name, avatar, introduction} = data

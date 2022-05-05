@@ -6,23 +6,6 @@ import Layout from '@/layout'
 Vue.use(Router)
 
 /**
- * Note: sub-menu only appear when route children.length >= 1
- * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
- *
- * hidden: true                   if set true, item will not show in the sidebar(default is false)
- * alwaysShow: true               if set true, will always show the root menu
- *                                if not set alwaysShow, when item has more than one children route,
- *                                it will becomes nested mode, otherwise not show the root menu
- * redirect: noRedirect           if set noRedirect will no redirect in the breadcrumb
- * name:'router-name'             the name is used by <keep-alive> (must set!!!)
- * meta : {
-    roles: ['admin','editor']    control the page roles (you can set multiple roles)
-    title: 'title'               the name show in sidebar and breadcrumb (recommend set)
-    icon: 'svg-name'/'el-icon-x' the icon show in the sidebar
-    breadcrumb: false            if set false, the item will hidden in breadcrumb(default is true)
-    activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
-  }
-
  当设置 true 的时候该路由不会在侧边栏出现 如401，login等页面，或者如一些编辑页面/edit/1
  hidden: true // (默认 false)
 
@@ -58,6 +41,7 @@ Vue.use(Router)
  */
 export const constantRoutes = [
 
+  // 重定向
   {
     path: '/redirect',
     component: Layout,
@@ -69,46 +53,31 @@ export const constantRoutes = [
       }
     ]
   },
+
+  // 登陆 注册
   {
     path: '/login',
     component: () => import('@/views/login/index'),
     hidden: true
   },
-
   {
     path: '/login2',
     name: 'login',
     component: () => import('@/views/login/login'),
     hidden: false
   },
-
   {
     path: '/register',
     name: 'register',
     component: () => import('@/views/login/register'),
     hidden: false
   },
-
-
-  // {
-  //   path: '/',
-  //   component: Layout,
-  //   redirect: '/dashboard',
-  //   children:
-  //     [{
-  //       path: '/StudentManager',
-  //       name: 'studentManager',
-  //       component: () => import('@/views/dashboard/teacher/studentManage'),
-  //       meta: {title: 'studentManager', icon: 'form', noCache: true}
-  //     }]
-  // },
-
   {
     path: '/',
     component: Layout,
     redirect: '/dashboard',
     meta: {
-      roles: ['teacher', 'student']
+      roles: ['teacher', 'student'],
     },
     children: [{
       path: 'dashboard',
@@ -122,43 +91,48 @@ export const constantRoutes = [
       }
     }]
   },
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/qiniu',
-    meta: {
-      roles: ['teacher', 'student']
-    },
-    children: [{
-      path: 'qiniu',
-      name: 'qiniu',
-      component: () => import('@/views/qiniu/upload'),
-      meta: {
-        title: 'upload',
-        icon: 'dashboard',
-        affix: false
-      }
-    }]
-  },
+
+  // {
+  //   path: '/',
+  //   component: Layout,
+  //   redirect: '/qiniu',
+  //   meta: {
+  //     roles: ['teacher', 'student']
+  //   },
+  //   children: [{
+  //     path: 'qiniu',
+  //     name: 'qiniu',
+  //     component: () => import('@/views/qiniu/upload'),
+  //     meta: {
+  //       title: 'upload',
+  //       icon: 'dashboard',
+  //       affix: false
+  //     }
+  //   }]
+  // },
 
   {
     path: '/example',
     component: Layout,
     redirect: '/example/table',
     name: 'Example',
-    meta: {title: 'Example', icon: 'el-icon-s-help'},
+    meta: {
+      title: 'Example',
+      icon: 'el-icon-s-help',
+      roles: ['teacher', 'student']
+    },
     children: [
       {
         path: 'table',
         name: 'Table',
         component: () => import('@/views/table/index'),
-        meta: {title: 'Table', icon: 'table'}
+        meta: {title: 'Table', icon: 'table', roles: ['teacher', 'student']}
       },
       {
         path: 'tree',
         name: 'Tree',
         component: () => import('@/views/tree/index'),
-        meta: {title: 'Tree', icon: 'tree'}
+        meta: {title: 'Tree', icon: 'tree', roles: ['student']}
       }
     ]
   },

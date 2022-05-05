@@ -18,8 +18,8 @@
         <!--unique-opened:是否只保持一个子菜单的展开-->
         <!--collapse-transition:是否开启折叠动画-->
 
-        <sidebar-item v-for="route in permission_routes" :key="route.path" :base-path="route.path" :item="route"/>
-
+        <!--        <sidebar-item v-for="route in permission_routes" :key="route.path" :base-path="route.path" :item="route"/>-->
+        <sidebar-item v-for="(route,index) in permission_routes" :key="index" :base-path="route.path" :item="route"/>
       </el-menu>
     </el-scrollbar>
   </div>

@@ -108,7 +108,7 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/dashboard',
     meta: {
-      roles: ['admin', 'editor']
+      roles: ['teacher', 'student']
     },
     children: [{
       path: 'dashboard',
@@ -118,7 +118,7 @@ export const constantRoutes = [
         title: 'Dashboard',
         icon: 'dashboard',
         affix: true,
-        roles: ['admin', 'editor']
+        roles: ['teacher', 'student']
       }
     }]
   },
@@ -127,7 +127,7 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/qiniu',
     meta: {
-      roles: ['admin', 'editor']
+      roles: ['teacher', 'student']
     },
     children: [{
       path: 'qiniu',

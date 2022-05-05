@@ -8,7 +8,7 @@
       </div>
 
       <el-form-item prop="username">
-        <el-input v-model="loginForm.userId" placeholder="请输入学号" />
+        <el-input v-model="loginForm.userId" placeholder="请输入学号"/>
       </el-form-item>
       <el-form-item prop="password">
         <el-input
@@ -46,7 +46,6 @@
 </template>
 
 <script>
-import Message from 'element-ui'
 
 export default {
 
@@ -76,7 +75,7 @@ export default {
       },
       loginRules: {
         // userId: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        password: [{required: true, trigger: 'blur', validator: validatePassword}]
         // role: [{required: true, trigger: 'blur', validator: validatorRole}]
       },
       passwordType: 'password',
@@ -112,7 +111,7 @@ export default {
     },
     // 大写提示
     checkCapslock(e) {
-      const { key } = e
+      const {key} = e
       this.capsTooltip = key && key.length === 1 && (key >= 'A' && key <= 'Z')
     },
 
@@ -120,7 +119,7 @@ export default {
       this.loading = true
       console.log('111')
       if (this.isEmpty()) {
-        Message.Message.error('您的信息没有填写完全')
+        // Message.Message.error('您的信息没有填写完全')
       }
       console.log('222')
       if (this.isEmptyAll()) {
@@ -134,17 +133,19 @@ export default {
           }
         }).then(response => {
           console.log(response)
-          // eslint-disable-next-line eqeqeq
           if (response.data.code == '200') {
-            Message.Message.info('登录成功')
-            this.$router.push('/Test')
+            console.log(response.data.data.user)
+            const data = response.data.data
+            this.$store.dispatch('user/login', data)
+            this.$router.push({path: '/'})
+            // Message.Message.info('登录成功')
           } else {
-            Message.Message.error('登录失败，账号或密码错误!')
+            // Message.Message.error('登录失败，账号或密码错误!')
             this.loginForm.password = ''
           }
         }).catch(err => {
           console.log(err)
-          Message.Message.error('登录失败，账号或密码错误!')
+          // Message.Message.error('登录失败，账号或密码错误!')
           this.loginForm.password = ''
         })
       }

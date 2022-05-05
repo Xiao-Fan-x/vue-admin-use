@@ -130,7 +130,7 @@ export default {
       this.loading = true
       console.log('submit start')
       if (this.isEmpty()) {
-        Message.Message.error('您的信息没有填写完全')
+        // Message.Message.error('您的信息没有填写完全')
       }
       if (this.isEmptyAll()) {
         // console.log('发送')
@@ -155,7 +155,7 @@ export default {
             Message.Message.info('注册成功,前往登录')
             this.$router.to('/login')
           } else {
-            Message.Message.error('您的学号已注册')
+            // Message.Message.error('您的学号已注册')
             this.$router.push({ name: 'register' })
           }
         }).catch((error) => {

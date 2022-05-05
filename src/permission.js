@@ -1,14 +1,13 @@
 import router from './router'
 import store from './store'
-import {Message} from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
-import {getToken} from '@/utils/auth' // get token from cookie
+import {getToken, removeToken} from '@/utils/auth' // get token from cookie
 import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({showSpinner: false}) // NProgress Configuration
 
-const whiteList = ['/login', '/register', '/login2', '/TeacherDash'] // no redirect whitelist
+const whiteList = ['/login', '/register', '/login2'] // no redirect whitelist
 
 router.beforeEach(async (to, from, next) => {
   // start progress bar
@@ -29,26 +28,30 @@ router.beforeEach(async (to, from, next) => {
       NProgress.done()
     } else {
       console.log('--name--')
-      const hasGetUserInfo = store.getters.name
+      const hasGetUserInfo = store.getters.userId
       if (hasGetUserInfo) {
-
         console.log('存在  name')
+        setTimeout(() => {
+
+        }, 1000)
         next()
       } else {
         try {
-          // get user info
-          const { roles } = await store.dispatch('user/getInfo')
-
+          const roles = store.getters.roles
+          // console.log(roles)
           // generate accessible routes map based on roles
           const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
           console.log(accessRoutes)
+
           // dynamically add accessible routes
           // router.addRoutes(accessRoutes)
-          next({ ...to, replace: true })
+          next({...to, replace: true})
         } catch (error) {
+          removeToken()
+          console.log('error -> login2')
           // remove token and go to login page to re-login
           await store.dispatch('user/resetToken')
-          Message.error(error || 'Has Error')
+          // Message.error(error || 'Has Error')
           next(`/login?redirect=${to.path}`)
           NProgress.done()
         }
@@ -63,7 +66,7 @@ router.beforeEach(async (to, from, next) => {
       next()
     } else {
       // other pages that do not have permission to access are redirected to the login page.
-      next(`/login?redirect=${to.path}`)
+      next(`/login2?redirect=${to.path}`)
       NProgress.done()
     }
   }

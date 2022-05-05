@@ -278,7 +278,7 @@ export default {
             this.multipleSelection = []
             this.$router.go(0)
           } else {
-            this.$message.error(`删除失败`)
+            // this.$message.error(`删除失败`)
           }
         }).catch(err => {
           console.log(err)

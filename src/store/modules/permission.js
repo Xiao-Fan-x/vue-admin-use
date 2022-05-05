@@ -55,7 +55,7 @@ const actions = {
       //   accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
       // }
       let accessedRoutes = filterAsyncRoutes(constantRoutes, roles)
-      console.log('filterAsyncRoutes' + accessedRoutes)
+      // console.log('filterAsyncRoutes' + accessedRoutes)
       commit('SET_ROUTES', accessedRoutes)
       resolve(accessedRoutes)
     })

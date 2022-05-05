@@ -4,7 +4,8 @@ import {resetRouter} from '@/router'
 import store from "@/store";
 
 const state = {
-  token: getToken(),
+  // token: getToken(),
+  token: '',
   name: '',
   avatar: '',
   introduction: '',
@@ -17,6 +18,7 @@ const state = {
   major: '',
   className: '',
   grade: '',
+  isOnline: ''
 }
 
 const mutations = {
@@ -49,7 +51,9 @@ const mutations = {
   SET_USERID: (state, userId) => {
     state.userId = userId
   },
-
+  SET_ISONLINE: (state, is) => {
+    state.isOnline = is
+  }
 }
 
 const actions = {
@@ -58,7 +62,7 @@ const actions = {
     commit('SET_TOKEN', token)
     commit('SET_USER', user)
     // commit('SET_ROLES', user.roles)
-    commit('SET_ISONLINE', '0')
+    commit('SET_ISONLINE', '1')
 
     setToken(token)
     console.log('user login --')

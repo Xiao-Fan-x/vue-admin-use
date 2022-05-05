@@ -4,6 +4,7 @@ import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 import {getToken, removeToken} from '@/utils/auth' // get token from cookie
 import getPageTitle from '@/utils/get-page-title'
+import path from "path";
 
 NProgress.configure({showSpinner: false}) // NProgress Configuration
 
@@ -17,7 +18,8 @@ router.beforeEach(async (to, from, next) => {
   document.title = getPageTitle(to.meta.title)
 
   // determine whether the user has logged in
-  const hasToken = getToken()
+  const hasToken = store.getters.token
+  // const hasToken = getToken()
 
   if (hasToken) {
     console.log('存在 token')
@@ -74,5 +76,6 @@ router.beforeEach(async (to, from, next) => {
 
 router.afterEach(() => {
   // finish progress bar
+  console.log()
   NProgress.done()
 })

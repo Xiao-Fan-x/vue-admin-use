@@ -16,6 +16,7 @@ const getters = {
   major: state => state.user.major,
   className: state => state.user.className,
   grade: state => state.user.grade,
+  isOnline: state => state.user.isOnline,
 
   visitedViews: state => state.tagsView.visitedViews,
   cachedViews: state => state.tagsView.cachedViews,

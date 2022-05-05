@@ -50,6 +50,8 @@ import {mapGetters} from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 import Screenfull from '@/components/Screenfull'
+import {removeToken} from "@/utils/auth";
+import store from "@/store";
 
 export default {
   components: {
@@ -68,8 +70,10 @@ export default {
       this.$store.dispatch('app/toggleSideBar')
     },
     async logout() {
+      removeToken()
       await this.$store.dispatch('user/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      await store.dispatch('user/resetToken')
+      this.$router.push(`/login2?redirect=${this.$route.fullPath}`)
     }
   }
 }

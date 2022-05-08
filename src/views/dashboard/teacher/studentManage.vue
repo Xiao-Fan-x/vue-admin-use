@@ -337,9 +337,4 @@ export default {
   height: 40px;
 }
 
-.context {
-  background-color: #ffffff;
-  padding: 20px 20px 20px 20px;
-  margin: 20px 20px 20px 20px;
-}
 </style>

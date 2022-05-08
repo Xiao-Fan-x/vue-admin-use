@@ -2,7 +2,6 @@
   <section class="app-main">
     <transition name="fade-transform" mode="out-in">
       <keep-alive v-bind:include="cachedViews">
-<!--        <router-view />-->
         <router-view :key="key" />
       </keep-alive>
     </transition>
@@ -27,10 +26,13 @@ export default {
 <style scoped>
 .app-main {
   /*50 = navbar  */
-  min-height: calc(100vh - 50px);
-  width: 100%;
+  /*min-height: calc(100vh - 50px);*/
+  /*width: 100%;*/
   position: relative;
   overflow: hidden;
+  background-color: #ffffff;
+  padding: 30px 30px 30px 30px;
+  margin: 20px 20px 20px 20px;
 }
 .fixed-header+.app-main {
   padding-top: 50px;

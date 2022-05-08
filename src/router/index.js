@@ -34,11 +34,6 @@ Vue.use(Router)
    }
  */
 
-/**
- * constantRoutes
- * a base page that does not have permission requirements
- * all roles can be accessed
- */
 export const constantRoutes = [
 
   // 重定向
@@ -72,19 +67,39 @@ export const constantRoutes = [
     component: () => import('@/views/login/register'),
     hidden: false
   },
+
+  // {
+  //   path: '/',
+  //   component: Layout,
+  //   redirect: '/login',
+  //   meta: {
+  //     roles: ['teacher', 'student']
+  //   },
+  //   children: [{
+  //     path: 'dashboard',
+  //     name: 'Dashboard',
+  //     component: () => import('@/views/dashboard/index'),
+  //     meta: {
+  //       title: 'Dashboard',
+  //       icon: 'dashboard',
+  //       affix: true,
+  //       roles: ['teacher', 'student']
+  //     }
+  //   }]
+  // },
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: '/teacher/index',
     meta: {
-      roles: ['teacher', 'student'],
+      roles: ['teacher', 'student']
     },
     children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
+      path: 'teacher/index',
+      name: '首页',
+      component: () => import('@/views/dashboard/teacher/dashboard'),
       meta: {
-        title: 'Dashboard',
+        title: '教师首页',
         icon: 'dashboard',
         affix: true,
         roles: ['teacher', 'student']
@@ -92,6 +107,101 @@ export const constantRoutes = [
     }]
   },
 
+  {
+    path: '/upload',
+    component: Layout,
+    redirect: '/upload/student',
+    meta: {
+      roles: ['teacher', 'student']
+    },
+    children: [{
+      path: 'student',
+      name: 'upload',
+      component: () => import('@/views/upload/studentUpload'),
+      meta: {
+        title: '学生上传',
+        icon: 'dashboard',
+        // affix: true,
+        roles: ['teacher', 'student']
+      }
+    }]
+  },
+  {
+    path: '/upload',
+    component: Layout,
+    // redirect: '/upload/index',
+    meta: {
+      roles: ['teacher', 'student']
+    },
+    children: [{
+      path: 'index',
+      name: 'upload',
+      component: () => import('@/views/upload/uploadTest'),
+      meta: {
+        title: '试题上传',
+        icon: 'dashboard',
+        // affix: true,
+        roles: ['teacher', 'student']
+      }
+    }]
+  },
+  {
+    path: '/upload',
+    component: Layout,
+    // redirect: '/upload/index',
+    meta: {
+      roles: ['teacher', 'student']
+    },
+    children: [{
+      path: 'test',
+      name: 'upload',
+      component: () => import('@/views/upload/Test'),
+      meta: {
+        title: '试题上传',
+        icon: 'dashboard',
+        // affix: true,
+        roles: ['teacher', 'student']
+      }
+    }]
+  },
+  {
+    path: '/tab',
+    component: Layout,
+    // redirect: '/upload/index',
+    meta: {
+      roles: ['teacher', 'student']
+    },
+    children: [{
+      path: 'index',
+      name: 'createExam',
+      component: () => import('@/views/test/input01'),
+      meta: {
+        title: 'Test',
+        icon: 'dashboard',
+        // affix: true,
+        roles: ['teacher', 'student']
+      }
+    }]
+  },
+  // {
+  //   path: '/upload',
+  //   component: Layout,
+  //   redirect: '/upload/index2',
+  //   meta: {
+  //     roles: ['teacher', 'student']
+  //   },
+  //   children: [{
+  //     path: 'index2',
+  //     name: 'upload2',
+  //     component: () => import('@/views/upload/Upload'),
+  //     meta: {
+  //       title: '文件上传',
+  //       icon: 'clipboard',
+  //       // affix: true,
+  //       roles: ['teacher', 'student']
+  //     }
+  //   }]
+  // },
   // {
   //   path: '/',
   //   component: Layout,
@@ -154,17 +264,19 @@ export const constantRoutes = [
   {
     path: '/teacher',
     component: Layout,
-    meta: {userRole: 'teacher'},
+    meta: {
+      roles: ['teacher', 'student']
+    },
     children:
       [{
         path: '/StudentManager',
         name: 'studentManager',
         component: () => import('@/views/dashboard/teacher/studentManage'),
         meta: {
-          title: 'studentManager',
+          title: '学生管理',
           icon: 'form',
           noCache: true,
-          userRole: 'teacher'
+          roles: ['teacher', 'student']
         }
       }]
   },

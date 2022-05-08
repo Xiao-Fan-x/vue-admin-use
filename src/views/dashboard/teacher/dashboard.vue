@@ -6,11 +6,13 @@
           <div class="user-info">
             <img alt class="user-avator" src="../../../assets/img.jpg">
             <div class="user-info-cont">
-              <div class="user-info-name">{{ name }}</div>
-              <div>{{ $store.getters.name }}</div>
+              <div class="user-info-name">{{ $store.getters.userName }}</div>
+              <div>{{ $store.getters.userId }}</div>
             </div>
           </div>
         </el-card>
+
+<!--        echarts-->
         <el-card
           shadow="hover"
           style="height:300px;
@@ -34,7 +36,7 @@
               <div class="grid-content grid-con-1">
                 <i class="el-icon-lx-people grid-con-icon" />
                 <div class="grid-cont-right">
-                  <div class="grid-num">1234</div>
+                  <div class="grid-num">{{student}}</div>
                   <div>用户数</div>
                 </div>
               </div>
@@ -67,12 +69,11 @@
         </el-row>
 
         <el-card shadow="hover" style="height:450px;">
-
           <div slot="header" class="clearfix">
             <span>考试</span>
             <el-button style="float: right; padding: 3px 0" type="text">刷新</el-button>
           </div>
-
+<!--          table-->
           <el-table
             :data="todoList"
             border
@@ -95,7 +96,6 @@
               prop="address"
             />
           </el-table>
-
         </el-card>
       </el-col>
     </el-row>
@@ -109,7 +109,7 @@ export default {
   name: 'TeacherDashboard',
   data() {
     return {
-      activeNames: ['3', '2', '4'],
+      // activeNames: ['3', '2', '4'],
       chart: null,
       TestNumber: {
         select: '',
@@ -159,7 +159,8 @@ export default {
         //   title: '今天要写100行代码加几个bug吧',
         //   status: true
         // }
-      ]
+      ],
+
     }
   },
   mounted() {
@@ -282,6 +283,10 @@ export default {
   flex: 1;
   font-size: 14px;
   color: #999;
+}
+
+.user-info-name{
+  padding-bottom: 20px;
 }
 
 .user-info-cont div:first-child {

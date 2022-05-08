@@ -12,7 +12,7 @@ export default {
   name: 'App',
 
   beforeDestroy() {
-    removeToken()
+    // removeToken()
 
     this.$store.dispatch('user/logout')
     store.dispatch('user/resetToken')

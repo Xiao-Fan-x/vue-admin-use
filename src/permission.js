@@ -61,7 +61,6 @@ router.beforeEach(async (to, from, next) => {
     }
   } else {
     /* has no token*/
-
     if (whiteList.indexOf(to.path) !== -1) {
       // in the free login whitelist, go directly
       console.log('白名单')
@@ -76,6 +75,5 @@ router.beforeEach(async (to, from, next) => {
 
 router.afterEach(() => {
   // finish progress bar
-  console.log()
   NProgress.done()
 })

@@ -138,32 +138,31 @@ export const constantRoutes = [
       name: 'upload',
       component: () => import('@/views/upload/uploadTest'),
       meta: {
-        title: '试题上传',
+        title: '题目上传',
         icon: 'dashboard',
-        // affix: true,
         roles: ['teacher', 'student']
       }
     }]
   },
-  {
-    path: '/upload',
-    component: Layout,
-    // redirect: '/upload/index',
-    meta: {
-      roles: ['teacher', 'student']
-    },
-    children: [{
-      path: 'test',
-      name: 'upload',
-      component: () => import('@/views/upload/Test'),
-      meta: {
-        title: '试题上传',
-        icon: 'dashboard',
-        // affix: true,
-        roles: ['teacher', 'student']
-      }
-    }]
-  },
+  // {
+  //   path: '/upload',
+  //   component: Layout,
+  //   // redirect: '/upload/index',
+  //   meta: {
+  //     roles: ['teacher', 'student']
+  //   },
+  //   children: [{
+  //     path: 'test',
+  //     name: 'upload',
+  //     component: () => import('@/views/upload/Test'),
+  //     meta: {
+  //       title: '试题上传',
+  //       icon: 'dashboard',
+  //       // affix: true,
+  //       roles: ['teacher', 'student']
+  //     }
+  //   }]
+  // },
   {
     path: '/tab',
     component: Layout,

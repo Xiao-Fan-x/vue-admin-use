@@ -64,8 +64,11 @@ router.beforeEach(async (to, from, next) => {
     if (whiteList.indexOf(to.path) !== -1) {
       // in the free login whitelist, go directly
       console.log('白名单')
+      console.log(to.path)
       next()
     } else {
+      console.log('xiazai')
+      console.log(to.path)
       // other pages that do not have permission to access are redirected to the login page.
       next(`/login2?redirect=${to.path}`)
       NProgress.done()

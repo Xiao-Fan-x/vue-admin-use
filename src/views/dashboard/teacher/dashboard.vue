@@ -12,7 +12,7 @@
           </div>
         </el-card>
 
-<!--        echarts-->
+        <!--        echarts-->
         <el-card
           shadow="hover"
           style="height:300px;
@@ -34,9 +34,9 @@
           <el-col :span="8">
             <el-card :body-style="{padding: '0px'}" shadow="hover">
               <div class="grid-content grid-con-1">
-                <i class="el-icon-lx-people grid-con-icon" />
+                <i class="el-icon-lx-people grid-con-icon"/>
                 <div class="grid-cont-right">
-                  <div class="grid-num">{{student}}</div>
+                  <div class="grid-num">{{ student }}</div>
                   <div>用户数</div>
                 </div>
               </div>
@@ -46,7 +46,7 @@
           <el-col :span="8">
             <el-card :body-style="{padding: '0px'}" shadow="hover">
               <div class="grid-content grid-con-2">
-                <i class="el-icon-notebook-1 grid-con-icon" />
+                <i class="el-icon-notebook-1 grid-con-icon"/>
                 <div class="grid-cont-right">
                   <div class="grid-num">321</div>
                   <div>总题量</div>
@@ -58,7 +58,7 @@
           <el-col :span="8">
             <el-card :body-style="{padding: '0px'}" shadow="hover">
               <div class="grid-content grid-con-3">
-                <i class="el-icon-lx-people grid-con-icon" />
+                <i class="el-icon-lx-people grid-con-icon"/>
                 <div class="grid-cont-right">
                   <div class="grid-num">5000</div>
                   <div>用户访问量</div>
@@ -73,7 +73,7 @@
             <span>考试</span>
             <el-button style="float: right; padding: 3px 0" type="text">刷新</el-button>
           </div>
-<!--          table-->
+          <!--          table-->
           <el-table
             :data="todoList"
             border
@@ -125,42 +125,8 @@ export default {
         {
           title: '今天要修复100个bug',
           status: false
-        },
-        {
-          title: '今天要写100行代码加几个bug吧',
-          status: false
         }
-        // },
-        // {
-        //   title: '今天要修复100个bug',
-        //   status: false
-        // },
-        // {
-        //   title: '今天要修复100个bug',
-        //   status: true
-        // },
-        // {
-        //   title: '今天要写100行代码加几个bug吧',
-        //   status: true
-        // },
-        // {
-        //   title: '今天要写100行代码加几个bug吧',
-        //   status: false
-        // },
-        // {
-        //   title: '今天要修复100个bug',
-        //   status: false
-        // },
-        // {
-        //   title: '今天要修复100个bug',
-        //   status: true
-        // },
-        // {
-        //   title: '今天要写100行代码加几个bug吧',
-        //   status: true
-        // }
-      ],
-
+      ]
     }
   },
   mounted() {
@@ -189,14 +155,13 @@ export default {
           {
             name: '访问来源',
             type: 'pie',
-            radius: '55%',
-            roseType: 'angle',
+            // radius: '80%',
+            // roseType: 'angle',
             data: [
-              { value: 235, name: '视频广告' },
-              { value: 274, name: '联盟广告' },
-              { value: 310, name: '邮件营销' },
-              { value: 335, name: '直接访问' }
-              // { value: 400, name: '搜索引擎' }
+              {value: 235, name: '选择题'},
+              {value: 274, name: '填空题'},
+              {value: 310, name: '判断题'},
+              {value: 3351, name: '简答题'}
             ]
           }
         ]
@@ -285,7 +250,7 @@ export default {
   color: #999;
 }
 
-.user-info-name{
+.user-info-name {
   padding-bottom: 20px;
 }
 

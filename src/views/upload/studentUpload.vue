@@ -1,27 +1,65 @@
 <template>
   <div>
 
-    <div class="container">
-      <div class="content-title" style="font-size: 22px;margin-bottom: 10px">学生信息上传</div>
+    <div id="containerOne" class="container">
+      <div class="content-title">上传学生信息</div>
       <div class="plugins-tips">
         以指定格式上传.
-        <a href="../../../assets/data/用户信息示例.xlsx" target="_blank">从此处查看格式规范</a>
+        <el-link @click="downloadStudentTemp()" style="font-size: 16px">点击此处下载格式规范.</el-link>
+        只能上传xls或xlsx格式!
       </div>
-      <el-upload
-        action="https://jsonplaceholder.typicode.com/posts/"
-        class="upload-demo"
-        drag
-        multiple
-      >
-        <i class="el-icon-upload"></i>
-        <div class="el-upload__text">将文件拖到此处,或<em>点击上传</em></div>
-        <div slot="tip" class="el-upload__tip">只能上传xls或xlsx格式!</div>
-      </el-upload>
+      <div>
+        <el-upload
+          ref="upload"
+          :auto-upload="true"
+          :before-upload="onBeforeUpload"
+          :data="uploadData"
+          :file-list="studentFiles"
+          :on-preview="handlePreview"
+          :on-remove="handleRemove"
+          accept=".xlsx,.xls"
+          action="/upload/studentInfor"
+          class="upload-demo"
+          drag
+          multiple>
+          <i class="el-icon-upload"></i>
+          <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+          <div slot="tip" class="el-upload__tip"> 只能上传xls或xlsx格式!</div>
+        </el-upload>
+      </div>
     </div>
   </div>
 </template>
 <script>
 
+export default {
+
+
+  data() {
+    return {
+      studentFiles: [],
+    }
+  },
+  methods: {
+    downloadStudentTemp() {
+      this.axios({
+        method: 'post',
+        url: '/upload/studentTemp',
+        responseType: 'blob'
+      }).then(res => {
+        const link = document.createElement('a')
+        const blob = new Blob([res.data], {type: 'multipary/form-data'})
+        link.style.display = 'none'
+        link.href = URL.createObjectURL(blob)
+        link.setAttribute('download', decodeURI('选择题模板.xlsx'))
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+        console.log(res)
+      })
+    },
+  }
+}
 </script>
 <style scoped>
 .content-title {

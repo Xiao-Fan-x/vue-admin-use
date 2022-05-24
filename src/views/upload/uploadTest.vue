@@ -1,100 +1,123 @@
 <template>
   <div>
+
     <div id="containerOne" class="container">
       <div class="content-title">上传选择题</div>
       <div class="plugins-tips">
         以指定格式上传.
-        <a href="../../../assets/data/用户信息示例.xlsx" target="_blank">从此处查看格式规范.</a>
+        <el-link @click="downloadSelectTemp()" style="font-size: 16px">点击此处下载格式规范.</el-link>
         只能上传xls或xlsx格式!
       </div>
-      <el-upload
-        ref="selectUpload"
-        :auto-upload="false"
-        :before-upload="beforeSelectTopicUpload"
-        :limit="1"
-        accept=".xlsx, .xls"
-        action=""
-        class="upload-demo"
-        drag
-      >
-        <i class="el-icon-upload"></i>
-        <div class="el-upload__text">将文件拖到此处,或<em>点击选择文件</em></div>
-      </el-upload>
-      <el-button size="big" type="success" @click="submitSelectTopicUpload">点击上传</el-button>
+      <div>
+        <el-upload
+          ref="upload"
+          :auto-upload="true"
+          :before-upload="onBeforeUpload"
+          :data="uploadData"
+          :file-list="selectFiles"
+          :on-preview="handlePreview"
+          :on-remove="handleRemove"
+          accept=".xlsx,.xls"
+          action="/upload/selectExam"
+          class="upload-demo"
+          drag
+          multiple>
+          <i class="el-icon-upload"></i>
+          <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+          <div slot="tip" class="el-upload__tip"> 只能上传xls或xlsx格式!</div>
+        </el-upload>
+      </div>
     </div>
 
     <el-divider></el-divider>
 
-
-    <div id="containerTwo" class="container">
+    <!--    填空题-->
+    <div id="containerOne" class="container">
       <div class="content-title">上传填空题</div>
       <div class="plugins-tips">
         以指定格式上传.
-        <a href="../../../assets/data/用户信息示例.xlsx" target="_blank">从此处查看格式规范.</a>
+        <el-link @click="downloadBlankTemp()" style="font-size: 16px">点击此处下载格式规范.</el-link>
         只能上传xls或xlsx格式!
       </div>
-      <el-upload
-        ref="blankUpload"
-        :auto-upload="false"
-        :before-upload="beforeBlankTopicUpload"
-        :limit="1"
-        accept=".xlsx, .xls"
-        action=""
-        class="upload-demo"
-        drag
-      >
-        <i class="el-icon-upload"></i>
-        <div class="el-upload__text">将文件拖到此处,或<em>点击选择文件</em></div>
-      </el-upload>
-      <el-button size="big" type="success" @click="submitBlankTopicUpload">点击上传</el-button>
+      <div>
+        <el-upload
+          ref="upload"
+          :auto-upload="true"
+          :before-upload="onBeforeUpload"
+          :data="uploadData"
+          :file-list="blankFiles"
+          :on-preview="handlePreview"
+          :on-remove="handleRemove"
+          accept=".xlsx,.xls"
+          action="/upload/blankExam"
+          class="upload-demo"
+          drag
+          multiple>
+          <i class="el-icon-upload"></i>
+          <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+          <div slot="tip" class="el-upload__tip"> 只能上传xls或xlsx格式!</div>
+        </el-upload>
+      </div>
     </div>
+
     <el-divider></el-divider>
 
-    <div id="containerThree" class="container">
+    <div id="containerOne" class="container">
       <div class="content-title">上传判断题</div>
       <div class="plugins-tips">
         以指定格式上传.
-        <a href="../../../assets/data/用户信息示例.xlsx" target="_blank">从此处查看格式规范.</a>
+        <el-link @click="downloadJudgeTemp()" style="font-size: 16px">点击此处下载格式规范.</el-link>
         只能上传xls或xlsx格式!
       </div>
-      <el-upload
-        ref="judgeUpload"
-        :auto-upload="false"
-        :before-upload="beforeJudgeTopicUpload"
-        :limit="1"
-        accept=".xlsx, .xls"
-        action=""
-        class="upload-demo"
-        drag
-      >
-        <i class="el-icon-upload"></i>
-        <div class="el-upload__text">将文件拖到此处,或<em>点击选择文件</em></div>
-      </el-upload>
-      <el-button size="big" type="success" @click="submitJudgeTopicUpload">点击上传</el-button>
+      <div>
+        <el-upload
+          ref="upload"
+          :auto-upload="true"
+          :before-upload="onBeforeUpload"
+          :data="uploadData"
+          :file-list="judgeFiles"
+          :on-preview="handlePreview"
+          :on-remove="handleRemove"
+          accept=".xlsx,.xls"
+          action="/upload/judgeExam"
+          class="upload-demo"
+          drag
+          multiple>
+          <i class="el-icon-upload"></i>
+          <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+          <div slot="tip" class="el-upload__tip"> 只能上传xls或xlsx格式!</div>
+        </el-upload>
+      </div>
     </div>
 
     <el-divider></el-divider>
-    <div id="containerFour" class="container">
-      <div class="content-title">上传主观题</div>
+
+    <div id="containerOne" class="container">
+      <div class="content-title">上传简答题</div>
       <div class="plugins-tips">
         以指定格式上传.
-        <a href="../../../assets/data/用户信息示例.xlsx" target="_blank">从此处查看格式规范.</a>
+        <el-link @click="downloadEssayTemp()" style="font-size: 16px">点击此处下载格式规范.</el-link>
         只能上传xls或xlsx格式!
       </div>
-      <el-upload
-        ref="subjectiveUpload"
-        :auto-upload="false"
-        :before-upload="beforeSubjectiveTopicUpload"
-        :limit="1"
-        accept=".xlsx, .xls"
-        action=""
-        class="upload-demo"
-        drag
-      >
-        <i class="el-icon-upload"></i>
-        <div class="el-upload__text">将文件拖到此处,或<em>点击选择文件</em></div>
-      </el-upload>
-      <el-button size="big" type="success" @click="submitSubjectiveTopicUpload">点击上传</el-button>
+      <div>
+        <el-upload
+          ref="upload"
+          :auto-upload="true"
+          :before-upload="onBeforeUpload"
+          :data="uploadData"
+          :file-list="essayFiles"
+          :on-preview="handlePreview"
+          :on-remove="handleRemove"
+          accept=".xlsx,.xls"
+          action="/upload/essayExam"
+          class="upload-demo"
+          drag
+          multiple>
+          <i class="el-icon-upload"></i>
+          <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+          <div slot="tip" class="el-upload__tip"> 只能上传xls或xlsx格式!</div>
+        </el-upload>
+      </div>
     </div>
 
     <!--遮罩层-->
@@ -112,6 +135,11 @@ export default {
   name: 'uploadTest',
   data() {
     return {
+      selectFiles: [],
+      blankFiles: [],
+      judgeFiles: [],
+      essayFiles: [],
+      uploadData: [],
       loading: false,
       percentage: 0,
       tips: '',
@@ -119,6 +147,76 @@ export default {
     }
   },
   methods: {
+
+    downloadSelectTemp() {
+      this.axios({
+        method: 'post',
+        url: '/upload/selectTemp',
+        responseType: 'blob'
+      }).then(res => {
+        const link = document.createElement('a')
+        const blob = new Blob([res.data], {type: 'multipary/form-data'})
+        link.style.display = 'none'
+        link.href = URL.createObjectURL(blob)
+        link.setAttribute('download', decodeURI('选择题模板.xlsx'))
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+        console.log(res)
+      })
+    },
+    downloadBlankTemp() {
+      this.axios({
+        method: 'post',
+        url: '/upload/blankTemp',
+        responseType: 'blob'
+      }).then(res => {
+        const link = document.createElement('a')
+        const blob = new Blob([res.data], {type: 'multipary/form-data'})
+        link.style.display = 'none'
+        link.href = URL.createObjectURL(blob)
+        link.setAttribute('download', decodeURI('填空题模板.xlsx'))
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+        console.log(res)
+      })
+    },
+    downloadJudgeTemp() {
+      this.axios({
+        method: 'post',
+        url: '/upload/judgeTemp',
+        responseType: 'blob'
+      }).then(res => {
+        const link = document.createElement('a')
+        const blob = new Blob([res.data], {type: 'multipary/form-data'})
+        link.style.display = 'none'
+        link.href = URL.createObjectURL(blob)
+        link.setAttribute('download', decodeURI('判断题模板.xlsx'))
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+        console.log(res)
+      })
+    },
+    downloadEssayTemp() {
+      this.axios({
+        method: 'post',
+        url: '/upload/essayTemp',
+        responseType: 'blob'
+      }).then(res => {
+        const link = document.createElement('a')
+        const blob = new Blob([res.data], {type: 'multipary/form-data'})
+        link.style.display = 'none'
+        link.href = URL.createObjectURL(blob)
+        link.setAttribute('download', decodeURI('简答题模板.xlsx'))
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+        console.log(res)
+      })
+    },
+
     beforeSelectTopicUpload(file) {
       let fd = new FormData();
       fd.append('file', file);

@@ -71,7 +71,7 @@
         <el-card shadow="hover" style="height:450px;">
           <div slot="header" class="clearfix">
             <span>考试</span>
-            <el-button style="float: right; padding: 3px 0" type="text" @click="getExam">刷新</el-button>
+            <el-button style="float: right; padding: 3px 0" type="text">刷新</el-button>
           </div>
           <!--          table-->
           <el-table
@@ -82,18 +82,18 @@
             style="width: 100%"
           >
             <el-table-column
-              label="考核"
-              prop="examName"
+              label="开始时间日期"
+              prop="title"
               width="180px"
             />
             <el-table-column
-              label="开始时间"
-              prop="startTime"
+              label="姓名"
+              prop="status"
               width="180"
             />
             <el-table-column
-              label="出卷人"
-              prop="createPeople"
+              label="地址"
+              prop="address"
             />
           </el-table>
         </el-card>
@@ -104,7 +104,6 @@
 
 <script>
 import * as echarts from 'echarts'
-import {mapGetters} from "vuex";
 
 export default {
   name: 'TeacherDashboard',
@@ -118,7 +117,16 @@ export default {
         blank: '',
         subject: ''
       },
-      todoList: []
+      todoList: [
+        {
+          title: '今天要修复100个bug',
+          status: false
+        },
+        {
+          title: '今天要修复100个bug',
+          status: false
+        }
+      ]
     }
   },
   mounted() {
@@ -139,14 +147,7 @@ export default {
         // console.log(val)
       }
     },
-    getExam() {
-      this.axios({
-        method: 'get',
-        url: 'examStudent/' + this.userId
-      }).then(res => {
-        this.todoList = res.data.data
-      })
-    },
+
     initChart() {
       this.chart = echarts.init(document.getElementById('pic123'))
 
@@ -167,12 +168,6 @@ export default {
         ]
       })
     }
-  },
-  computed: {
-    ...mapGetters([
-      'role',
-      'userId'
-    ])
   }
 }
 </script>

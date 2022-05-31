@@ -115,16 +115,11 @@
         <el-button type="primary" @click="saveEdit">确 定</el-button>
       </span>
     </el-dialog>
-    <div class="block">
-      <span class="demonstration">完整功能</span>
+
+    <div class="block" style="text-align: center">
       <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="currentPage4"
-        :page-sizes="[100, 200, 300, 400]"
-        :page-size="100"
-        layout="total, prev, pager, next, jumper"
-        :total="400">
+        layout="prev, pager, next"
+        :total="1000">
       </el-pagination>
     </div>
   </div>

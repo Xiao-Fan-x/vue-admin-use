@@ -106,7 +106,25 @@ export const constantRoutes = [
       }
     }]
   },
-
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/student/index',
+    meta: {
+      roles: ['teacher', 'student']
+    },
+    children: [{
+      path: 'student/index',
+      name: '首页',
+      component: () => import('@/views/dashboard/student/dashboard'),
+      meta: {
+        title: '学生首页',
+        icon: 'dashboard',
+        affix: true,
+        roles: ['teacher', 'student']
+      }
+    }]
+  },
   {
     path: '/upload',
     component: Layout,
@@ -120,6 +138,25 @@ export const constantRoutes = [
       component: () => import('@/views/upload/studentUpload'),
       meta: {
         title: '学生上传',
+        icon: 'dashboard',
+        // affix: true,
+        roles: ['teacher', 'student']
+      }
+    }]
+  },
+  {
+    path: '/createExam',
+    component: Layout,
+    redirect: '/createExam/index',
+    meta: {
+      roles: ['teacher', 'student']
+    },
+    children: [{
+      path: 'index',
+      name: 'upload',
+      component: () => import('@/views/createExam/index'),
+      meta: {
+        title: '创建考核',
         icon: 'dashboard',
         // affix: true,
         roles: ['teacher', 'student']
@@ -144,122 +181,6 @@ export const constantRoutes = [
       }
     }]
   },
-  // {
-  //   path: '/upload',
-  //   component: Layout,
-  //   // redirect: '/upload/index',
-  //   meta: {
-  //     roles: ['teacher', 'student']
-  //   },
-  //   children: [{
-  //     path: 'test',
-  //     name: 'upload',
-  //     component: () => import('@/views/upload/Test'),
-  //     meta: {
-  //       title: '试题上传',
-  //       icon: 'dashboard',
-  //       // affix: true,
-  //       roles: ['teacher', 'student']
-  //     }
-  //   }]
-  // },
-  {
-    path: '/tab',
-    component: Layout,
-    // redirect: '/upload/index',
-    meta: {
-      roles: ['teacher', 'student']
-    },
-    children: [{
-      path: 'index',
-      name: 'createExam',
-      component: () => import('@/views/test/input01'),
-      meta: {
-        title: 'Test',
-        icon: 'dashboard',
-        // affix: true,
-        roles: ['teacher', 'student']
-      }
-    }]
-  },
-  // {
-  //   path: '/upload',
-  //   component: Layout,
-  //   redirect: '/upload/index2',
-  //   meta: {
-  //     roles: ['teacher', 'student']
-  //   },
-  //   children: [{
-  //     path: 'index2',
-  //     name: 'upload2',
-  //     component: () => import('@/views/upload/Upload'),
-  //     meta: {
-  //       title: '文件上传',
-  //       icon: 'clipboard',
-  //       // affix: true,
-  //       roles: ['teacher', 'student']
-  //     }
-  //   }]
-  // },
-  // {
-  //   path: '/',
-  //   component: Layout,
-  //   redirect: '/qiniu',
-  //   meta: {
-  //     roles: ['teacher', 'student']
-  //   },
-  //   children: [{
-  //     path: 'qiniu',
-  //     name: 'qiniu',
-  //     component: () => import('@/views/qiniu/upload'),
-  //     meta: {
-  //       title: 'upload',
-  //       icon: 'dashboard',
-  //       affix: false
-  //     }
-  //   }]
-  // },
-
-  {
-    path: '/example',
-    component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: {
-      title: 'Example',
-      icon: 'el-icon-s-help',
-      roles: ['teacher', 'student']
-    },
-    children: [
-      {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: {title: 'Table', icon: 'table', roles: ['teacher', 'student']}
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: {title: 'Tree', icon: 'tree', roles: ['student']}
-      }
-    ]
-  },
-
-  {
-    path: '/form',
-    component: Layout,
-    redirect: '/form',
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: {title: 'Form', icon: 'form', noCache: false}
-      }
-    ]
-  },
-
   {
     path: '/teacher',
     component: Layout,
@@ -279,76 +200,142 @@ export const constantRoutes = [
         }
       }]
   },
-
   {
-    path: '/nested',
+    path: '/student',
     component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
     meta: {
-      title: 'Nested',
-      icon: 'nested'
+      roles: ['teacher', 'student']
+    },
+    children:
+      [{
+        path: '/exam',
+        name: 'studentExam',
+        component: () => import('@/views/dashboard/student/ExamList'),
+        meta: {
+          title: '学生考核',
+          icon: 'form',
+          noCache: true,
+          roles: ['teacher', 'student']
+        }
+      }]
+  },
+  {
+    path: '/exam',
+    component: Layout,
+    meta: {
+      roles: ['teacher', 'student']
+    },
+    hidden: true,
+    children:
+      [{
+        path: 'examPage',
+        name: 'examPage',
+        component: () => import('@/views/dashboard/student/startExam'),
+        meta: {
+          title: '考核页面',
+          icon: 'form',
+          noCache: true,
+          roles: ['teacher', 'student']
+        },
+      }]
+  },
+  {
+    path: '/show',
+    component: Layout,
+    redirect: '/show/select',
+    name: '查看题库',
+    meta: {
+      title: '查看题库',
+      icon: 'el-icon-s-help',
+      roles: ['teacher', 'student']
     },
     children: [
       {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: {title: 'Menu1'},
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: {title: 'Menu1-1'}
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: {title: 'Menu1-2'},
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: {title: 'Menu1-2-1'}
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: {title: 'Menu1-2-2'}
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: {title: 'Menu1-3'}
-          }
-        ]
+        path: 'select',
+        name: '选择题',
+        component: () => import('@/views/table/Select'),
+        meta: {title: '选择题', icon: 'table', roles: ['teacher', 'student']}
       },
       {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        name: 'Menu2',
-        meta: {title: 'menu2'}
-      }
+        path: 'blank',
+        name: '填空题',
+        component: () => import('@/views/table/Blank'),
+        meta: {title: '填空题', icon: 'table', roles: ['teacher', 'student']}
+      },
+      {
+        path: 'judge',
+        name: '判断题',
+        component: () => import('@/views/table/index'),
+        meta: {title: '判断题', icon: 'table', roles: ['teacher', 'student']}
+      },
+      {
+        path: 'essay',
+        name: '简答题',
+        component: () => import('@/views/table/index'),
+        meta: {title: '简答题', icon: 'table', roles: ['teacher', 'student']}
+      },
     ]
   },
 
-  {
-    path: 'external-link',
-    component: Layout,
-    children: [
-      {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: {title: 'External Link', icon: 'link'}
-      }
-    ]
-  },
+  // {
+  //   path: '/nested',
+  //   component: Layout,
+  //   redirect: '/nested/menu1',
+  //   name: 'Nested',
+  //   meta: {
+  //     title: 'Nested',
+  //     icon: 'nested'
+  //   },
+  //   children: [
+  //     {
+  //       path: 'menu1',
+  //       component: () => import('@/views/nested/menu1/index'), // Parent router-view
+  //       name: 'Menu1',
+  //       meta: {title: 'Menu1'},
+  //       children: [
+  //         {
+  //           path: 'menu1-1',
+  //           component: () => import('@/views/nested/menu1/menu1-1'),
+  //           name: 'Menu1-1',
+  //           meta: {title: 'Menu1-1'}
+  //         },
+  //         {
+  //           path: 'menu1-2',
+  //           component: () => import('@/views/nested/menu1/menu1-2'),
+  //           name: 'Menu1-2',
+  //           meta: {title: 'Menu1-2'},
+  //           children: [
+  //             {
+  //               path: 'menu1-2-1',
+  //               component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
+  //               name: 'Menu1-2-1',
+  //               meta: {title: 'Menu1-2-1'}
+  //             },
+  //             {
+  //               path: 'menu1-2-2',
+  //               component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
+  //               name: 'Menu1-2-2',
+  //               meta: {title: 'Menu1-2-2'}
+  //             }
+  //           ]
+  //         },
+  //         {
+  //           path: 'menu1-3',
+  //           component: () => import('@/views/nested/menu1/menu1-3'),
+  //           name: 'Menu1-3',
+  //           meta: {title: 'Menu1-3'}
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       path: 'menu2',
+  //       component: () => import('@/views/nested/menu2/index'),
+  //       name: 'Menu2',
+  //       meta: {title: 'menu2'}
+  //     }
+  //   ]
+  // },
+
 
   {
     path: '/404',

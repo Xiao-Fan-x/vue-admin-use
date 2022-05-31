@@ -5,7 +5,7 @@
       <div class="content-title">上传选择题</div>
       <div class="plugins-tips">
         以指定格式上传.
-        <el-link @click="downloadSelectTemp()" style="font-size: 16px">点击此处下载格式规范.</el-link>
+        <el-link style="font-size: 16px" @click="downloadSelectTemp()">点击此处下载格式规范.</el-link>
         只能上传xls或xlsx格式!
       </div>
       <div>
@@ -36,7 +36,7 @@
       <div class="content-title">上传填空题</div>
       <div class="plugins-tips">
         以指定格式上传.
-        <el-link @click="downloadBlankTemp()" style="font-size: 16px">点击此处下载格式规范.</el-link>
+        <el-link style="font-size: 16px" @click="downloadBlankTemp()">点击此处下载格式规范.</el-link>
         只能上传xls或xlsx格式!
       </div>
       <div>
@@ -66,7 +66,7 @@
       <div class="content-title">上传判断题</div>
       <div class="plugins-tips">
         以指定格式上传.
-        <el-link @click="downloadJudgeTemp()" style="font-size: 16px">点击此处下载格式规范.</el-link>
+        <el-link style="font-size: 16px" @click="downloadJudgeTemp()">点击此处下载格式规范.</el-link>
         只能上传xls或xlsx格式!
       </div>
       <div>
@@ -96,7 +96,7 @@
       <div class="content-title">上传简答题</div>
       <div class="plugins-tips">
         以指定格式上传.
-        <el-link @click="downloadEssayTemp()" style="font-size: 16px">点击此处下载格式规范.</el-link>
+        <el-link style="font-size: 16px" @click="downloadEssayTemp()">点击此处下载格式规范.</el-link>
         只能上传xls或xlsx格式!
       </div>
       <div>
@@ -129,7 +129,6 @@
   </div>
 </template>
 <script>
-import axios from "axios";
 
 export default {
   name: 'uploadTest',
@@ -146,11 +145,14 @@ export default {
       dialogVisible: false
     }
   },
-  methods: {
 
+  methods: {
+    /**
+     * 下载选择题模板
+     */
     downloadSelectTemp() {
       this.axios({
-        method: 'post',
+        method: 'get',
         url: '/upload/selectTemp',
         responseType: 'blob'
       }).then(res => {
@@ -165,9 +167,10 @@ export default {
         console.log(res)
       })
     },
+
     downloadBlankTemp() {
       this.axios({
-        method: 'post',
+        method: 'get',
         url: '/upload/blankTemp',
         responseType: 'blob'
       }).then(res => {
@@ -182,9 +185,10 @@ export default {
         console.log(res)
       })
     },
+
     downloadJudgeTemp() {
       this.axios({
-        method: 'post',
+        method: 'get',
         url: '/upload/judgeTemp',
         responseType: 'blob'
       }).then(res => {
@@ -199,9 +203,10 @@ export default {
         console.log(res)
       })
     },
+
     downloadEssayTemp() {
       this.axios({
-        method: 'post',
+        method: 'get',
         url: '/upload/essayTemp',
         responseType: 'blob'
       }).then(res => {
@@ -215,167 +220,167 @@ export default {
         document.body.removeChild(link)
         console.log(res)
       })
-    },
-
-    beforeSelectTopicUpload(file) {
-      let fd = new FormData();
-      fd.append('file', file);
-      let config = {
-        onUploadProgress: progressEvent => {
-          let complete = (progressEvent.loaded / progressEvent.total).toFixed(2) * 100;
-          this.percentage = complete;
-        },
-        header: {
-          'ContentType-Type': 'multipart/form-data'
-        }
-      };
-      axios.post("http://localhost:8080/teacher/selectTopicsUpload", fd, config)
-        .then(response => {
-          console.log(response)
-          if (this.percentage >= 100) {
-            if (response.data === true) {
-              this.dialogVisible = true;
-              this.$message.success("上传成功!");
-              this.$router.push('/teacher/teacherSearchAllSelectionTest');
-            } else {
-              this.dialogVisible = true;
-              this.$message.error("上传失败!")
-            }
-          }
-          if (this.percentage >= 100 && response.data === true) {
-            this.dialogVisible = true
-          }
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    },
-
-    submitSelectTopicUpload() {
-      this.loading = true;
-      this.tips = "正在上传中...";
-      this.$refs.selectUpload.submit();
-    },
-
-    beforeBlankTopicUpload(file) {
-      let fd = new FormData();
-      fd.append('file', file);
-      let config = {
-        onUploadProgress: progressEvent => {
-          let complete = (progressEvent.loaded / progressEvent.total).toFixed(2) * 100;
-          this.percentage = complete;
-        },
-        header: {
-          'ContentType-Type': 'multipart/form-data'
-        }
-      };
-      axios.post("http://localhost:8080/teacher/blankTopicsUpload", fd, config)
-        .then(response => {
-          console.log(response)
-          if (this.percentage >= 100) {
-            if (response.data === true) {
-              this.dialogVisible = true;
-              this.$message.success("上传成功!");
-              this.$router.push('/teacher/teacherSearchAllBlankTest');
-            } else {
-              this.dialogVisible = true;
-              this.$message.error("上传失败!")
-            }
-          }
-          if (this.percentage >= 100 && response.data === true) {
-            this.dialogVisible = true
-          }
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    },
-
-    submitBlankTopicUpload() {
-      this.loading = true;
-      this.tips = '正在上传中...';
-      this.$refs.blankUpload.submit();
-    },
-
-    beforeJudgeTopicUpload(file) {
-      let fd = new FormData();
-      fd.append('file', file);
-      let config = {
-        onUploadProgress: progressEvent => {
-          let complete = (progressEvent.loaded / progressEvent.total).toFixed(2) * 100;
-          this.percentage = complete;
-        },
-        header: {
-          'ContentType-Type': 'multipart/form-data'
-        }
-      };
-      axios.post("http://localhost:8080/teacher/judgeTopicsUpload", fd, config)
-        .then(response => {
-          console.log(response)
-          if (this.percentage >= 100) {
-            if (response.data === true) {
-              this.dialogVisible = true;
-              this.$message.success("上传成功!");
-              this.$router.push('/teacher/teacherSearchAllJudgeTest');
-            } else {
-              this.dialogVisible = true;
-              this.$message.error("上传失败!")
-            }
-          }
-          if (this.percentage >= 100 && response.data === true) {
-            this.dialogVisible = true
-          }
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    },
-
-    submitJudgeTopicUpload() {
-      this.loading = true;
-      this.tips = '正在上传中...';
-      this.$refs.judgeUpload.submit();
-    },
-
-    beforeSubjectiveTopicUpload(file) {
-      let fd = new FormData();
-      fd.append('file', file);
-      let config = {
-        onUploadProgress: progressEvent => {
-          let complete = (progressEvent.loaded / progressEvent.total).toFixed(2) * 100;
-          this.percentage = complete;
-        },
-        header: {
-          'ContentType-Type': 'multipart/form-data'
-        }
-      };
-      axios.post("http://localhost:8080/teacher/subjectiveTopicsUpload", fd, config)
-        .then(response => {
-          console.log(response)
-          if (this.percentage >= 100) {
-            if (response.data === true) {
-              this.dialogVisible = true;
-              this.$message.success("上传成功!");
-              this.$router.push('/teacher/teacherSearchAllDescriptionTest');
-            } else {
-              this.dialogVisible = true;
-              this.$message.error("上传失败!")
-            }
-          }
-          if (this.percentage >= 100 && response.data === true) {
-            this.dialogVisible = true
-          }
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    },
-
-    submitSubjectiveTopicUpload() {
-      this.loading = true;
-      this.tips = '正在上传中...';
-      this.$refs.subjectiveUpload.submit();
     }
+
+    // beforeSelectTopicUpload(file) {
+    //   let fd = new FormData();
+    //   fd.append('file', file);
+    //   let config = {
+    //     onUploadProgress: progressEvent => {
+    //       let complete = (progressEvent.loaded / progressEvent.total).toFixed(2) * 100;
+    //       this.percentage = complete;
+    //     },
+    //     header: {
+    //       'ContentType-Type': 'multipart/form-data'
+    //     }
+    //   };
+    //   axios.post("http://localhost:8080/teacher/selectTopicsUpload", fd, config)
+    //     .then(response => {
+    //       console.log(response)
+    //       if (this.percentage >= 100) {
+    //         if (response.data === true) {
+    //           this.dialogVisible = true;
+    //           this.$message.success("上传成功!");
+    //           this.$router.push('/teacher/teacherSearchAllSelectionTest');
+    //         } else {
+    //           this.dialogVisible = true;
+    //           this.$message.error("上传失败!")
+    //         }
+    //       }
+    //       if (this.percentage >= 100 && response.data === true) {
+    //         this.dialogVisible = true
+    //       }
+    //     })
+    //     .catch(err => {
+    //       console.log(err)
+    //     })
+    // },
+
+    // submitSelectTopicUpload() {
+    //   this.loading = true;
+    //   this.tips = "正在上传中...";
+    //   this.$refs.selectUpload.submit();
+    // },
+
+    // beforeBlankTopicUpload(file) {
+    //   let fd = new FormData();
+    //   fd.append('file', file);
+    //   let config = {
+    //     onUploadProgress: progressEvent => {
+    //       let complete = (progressEvent.loaded / progressEvent.total).toFixed(2) * 100;
+    //       this.percentage = complete;
+    //     },
+    //     header: {
+    //       'ContentType-Type': 'multipart/form-data'
+    //     }
+    //   };
+    //   axios.post("http://localhost:8080/teacher/blankTopicsUpload", fd, config)
+    //     .then(response => {
+    //       console.log(response)
+    //       if (this.percentage >= 100) {
+    //         if (response.data === true) {
+    //           this.dialogVisible = true;
+    //           this.$message.success("上传成功!");
+    //           this.$router.push('/teacher/teacherSearchAllBlankTest');
+    //         } else {
+    //           this.dialogVisible = true;
+    //           this.$message.error("上传失败!")
+    //         }
+    //       }
+    //       if (this.percentage >= 100 && response.data === true) {
+    //         this.dialogVisible = true
+    //       }
+    //     })
+    //     .catch(err => {
+    //       console.log(err)
+    //     })
+    // },
+
+    // submitBlankTopicUpload() {
+    //   this.loading = true;
+    //   this.tips = '正在上传中...';
+    //   this.$refs.blankUpload.submit();
+    // },
+
+    // beforeJudgeTopicUpload(file) {
+    //   let fd = new FormData();
+    //   fd.append('file', file);
+    //   let config = {
+    //     onUploadProgress: progressEvent => {
+    //       let complete = (progressEvent.loaded / progressEvent.total).toFixed(2) * 100;
+    //       this.percentage = complete;
+    //     },
+    //     header: {
+    //       'ContentType-Type': 'multipart/form-data'
+    //     }
+    //   };
+    //   axios.post("http://localhost:8080/teacher/judgeTopicsUpload", fd, config)
+    //     .then(response => {
+    //       console.log(response)
+    //       if (this.percentage >= 100) {
+    //         if (response.data === true) {
+    //           this.dialogVisible = true;
+    //           this.$message.success("上传成功!");
+    //           this.$router.push('/teacher/teacherSearchAllJudgeTest');
+    //         } else {
+    //           this.dialogVisible = true;
+    //           this.$message.error("上传失败!")
+    //         }
+    //       }
+    //       if (this.percentage >= 100 && response.data === true) {
+    //         this.dialogVisible = true
+    //       }
+    //     })
+    //     .catch(err => {
+    //       console.log(err)
+    //     })
+    // },
+
+    // submitJudgeTopicUpload() {
+    //   this.loading = true;
+    //   this.tips = '正在上传中...';
+    //   this.$refs.judgeUpload.submit();
+    // },
+
+    // beforeSubjectiveTopicUpload(file) {
+    //   let fd = new FormData();
+    //   fd.append('file', file);
+    //   let config = {
+    //     onUploadProgress: progressEvent => {
+    //       let complete = (progressEvent.loaded / progressEvent.total).toFixed(2) * 100;
+    //       this.percentage = complete;
+    //     },
+    //     header: {
+    //       'ContentType-Type': 'multipart/form-data'
+    //     }
+    //   };
+    //   axios.post("http://localhost:8080/teacher/subjectiveTopicsUpload", fd, config)
+    //     .then(response => {
+    //       console.log(response)
+    //       if (this.percentage >= 100) {
+    //         if (response.data === true) {
+    //           this.dialogVisible = true;
+    //           this.$message.success("上传成功!");
+    //           this.$router.push('/teacher/teacherSearchAllDescriptionTest');
+    //         } else {
+    //           this.dialogVisible = true;
+    //           this.$message.error("上传失败!")
+    //         }
+    //       }
+    //       if (this.percentage >= 100 && response.data === true) {
+    //         this.dialogVisible = true
+    //       }
+    //     })
+    //     .catch(err => {
+    //       console.log(err)
+    //     })
+    // },
+
+    // submitSubjectiveTopicUpload() {
+    //   this.loading = true;
+    //   this.tips = '正在上传中...';
+    //   this.$refs.subjectiveUpload.submit();
+    // }
 
   }
 }

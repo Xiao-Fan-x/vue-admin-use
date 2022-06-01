@@ -31,43 +31,43 @@
             </el-form-item>
             <!--  年级-->
             <el-form-item :label-width="formLabelWidth" label="年级">
-              <el-select v-model="exam.grade" placeholder="请选择年级">
-                <el-option v-for="(item,index) in examOption.grade" :key="index" :label="item"
-                           :value="item"></el-option>
+              <el-select v-model="examOption.grade" placeholder="请选择年级" clearable>
+                <el-option v-for="(item,index) in classInfor" :key="index" :label="item.grade"
+                           :value="item.grade"></el-option>
               </el-select>
             </el-form-item>
 
             <el-form-item :label-width="formLabelWidth" label="系">
-              <el-select v-model="exam.department" placeholder="请选择系">
-                <el-option v-for="(item,index) in examOption.department" :key="index" :label="item"
-                           :value="item"></el-option>
+              <el-select v-model="examOption.department" placeholder="请选择系" clearable>
+                <el-option v-for="(item,index) in classInfor" :key="index" :label="item.department"
+                           :value="item.department"></el-option>
               </el-select>
             </el-form-item>
             <!---->
             <el-form-item :label-width="formLabelWidth" label="专业">
-              <el-select v-model="exam.major" placeholder="请选择专业">
-                <el-option v-for="(item,index) in examOption.major" :key="index" :label="item"
-                           :value="item"></el-option>
+              <el-select v-model="examOption.major" placeholder="请选择专业" clearable>
+                <el-option v-for="(item,index) in classInfor" :key="index" :label="item.major"
+                           :value="item.major"></el-option>
               </el-select>
             </el-form-item>
 
             <el-form-item :label-width="formLabelWidth" label="学科">
-              <el-select v-model="examOption.subject" placeholder="请选择学科">
-                <el-option v-for="(item,index) in examOption.subject" :key="index" :label="item"
+              <el-select v-model="examOption.subject" placeholder="请选择学科" clearable>
+                <el-option v-for="(item,index) in classInfor" :key="index" :label="item"
                            :value="item"></el-option>
               </el-select>
             </el-form-item>
 
             <el-form-item :label-width="formLabelWidth" label="班级">
-              <el-select v-model="examOption.className" placeholder="请选择班级">
-                <el-option v-for="(item,index) in examOption.className" :key="index" :label="item"
+              <el-select v-model="examOption.className" placeholder="请选择班级" clearable>
+                <el-option v-for="(item,index) in classInfor" :key="index" :label="item"
                            :value="item"></el-option>
               </el-select>
             </el-form-item>
 
             <el-form-item :label-width="formLabelWidth" label="选修课">
-              <el-select v-model="examOption.elective" placeholder="请选择选修课">
-                <el-option v-for="(item,index) in examOption.elective" :key="index" :label="item"
+              <el-select v-model="examOption.elective" placeholder="请选择选修课" clearable>
+                <el-option v-for="(item,index) in classInfor" :key="index" :label="item"
                            :value="item"></el-option>
               </el-select>
             </el-form-item>
@@ -172,13 +172,13 @@ export default {
       classInfor: [],
       examOption: {
         name: '',
-        grade: ['2017', '2018', '2019'],
-        major: [],
-        subject: [],
-        department: [],
-        className: [],
-        elective: [],
         date: [],
+        grade: '',
+        major: '',
+        subject: '',
+        department: '',
+        className: '',
+        elective: ''
       },
       // 选题
       examType: 'blank',
@@ -234,7 +234,7 @@ export default {
     handleSelectionChangeEssay(val) {
       this.multipleSelection = val
     },
-    send(index, row){
+    send(index, row) {
       this.axios({
         method: 'get',
         url: 'examTeacher/send/' + row.id
@@ -257,6 +257,7 @@ export default {
       this.selectExam.id = row.id
       this.dialogTableVisible = true
     },
+
     selectQues() {
       this.dialogTableVisible = false
       this.axios({
@@ -282,23 +283,44 @@ export default {
         url: '/examTeacher/' + this.userId,
         data: {}
       }).then(res => {
-        console.log(res)
-        this.examList = res.data.data.other
+        // console.log(res)
+        this.examList = res.data.data.self
       }).then(err => {
         console.log(err)
       })
     },
-
+    // 获取学校班级信息
     getClassInfor() {
       this.axios({
         method: 'get',
         url: '/clasz',
         // data: {}
       }).then(res => {
+        console.log(res)
         this.classInfor = res.data.data
       }).then(err => {
         console.log(err)
       })
+    },
+    // 过滤 系
+    getMajor() {
+      if (this.examOption.department != '') {
+        return this.classInfor.filter(function (e) {
+          return e.department == this.department
+        })
+      } else {
+        return this.classInfor
+      }
+    },
+    // 过滤 专业
+    getSubject() {
+      if (this.examOption.major != '') {
+        return this.classInfor.filter(function (e) {
+          return e.major == this.major
+        })
+      } else {
+        return this.classInfor
+      }
     },
     createExam() {
       this.dialogFormVisible = false
@@ -310,12 +332,12 @@ export default {
           createPeople: this.userId,
           startTime: this.examOption.date[0],
           endTime: this.examOption.date[1],
-          grade: this.exam.grade,
-          department: this.exam.department,
-          major: this.exam.major,
-          subject: this.exam.subject,
-          className: this.exam.className,
-          elective: this.exam.elective,
+          grade: this.examOption.grade,
+          department: this.examOption.department,
+          major: this.examOption.major,
+          subject: this.examOption.subject,
+          className: this.examOption.className,
+          elective: this.examOption.elective,
         }
       }).then(res => {
         this.classInfor = res.data.list
@@ -328,7 +350,11 @@ export default {
     this.getExamList()
     this.getClassInfor()
   },
-  computed: {}
+  computed: {
+    ...mapGetters([
+      'userId'
+    ])
+  }
 }
 
 </script>

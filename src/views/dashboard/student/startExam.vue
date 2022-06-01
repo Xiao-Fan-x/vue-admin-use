@@ -1,38 +1,35 @@
 <template>
-  <!--  <div>-->
-  <!--    {{this.$route.params.userId}}-->
-  <!--  </div>-->
   <div>
-    <h1>hello</h1>
+    <h1>考核</h1>
     <div class="container">
       <div class="exam-card">
         <div class="card-content">
           <el-card class="box-card">
             <!-- 选择题 -->
-            <div v-for="(item, index) in selectTopicsList" :key="index" class="q-single">
+            <div v-for="(item, index) in selectList" :key="index" class="q-single">
               <br>
               <div slot="header" class="clearfix">
-                <span style="font-family: 幼圆; font-size: 17px">第{{ item.topicId }}题 ({{ item.topicType }}):</span>
+                <span style="font-family: 幼圆; font-size: 17px">选择题 第({{ index + 1 }})题:</span>
               </div>
               <div class="question" style="font-family: 幼圆; font-size: 18px">
                 {{ item.detail }}
               </div>
               <div class="answer">
                 <div class="answer-item">
-                  <el-radio-group v-model="clientSelectAnswer[index]" style="font-family: 幼圆; font-size: 17px">
-                    <el-radio label="A">{{ item.optionA }}</el-radio>
-                    <el-radio label="B">{{ item.optionB }}</el-radio>
-                    <el-radio label="C">{{ item.optionC }}</el-radio>
-                    <el-radio label="D">{{ item.optionD }}</el-radio>
+                  <el-radio-group v-model="selectAnswer[index]" style="font-family: 幼圆; font-size: 17px">
+                    <el-radio label="A">{{ item.pointA }}</el-radio>
+                    <el-radio label="B">{{ item.pointB }}</el-radio>
+                    <el-radio label="C">{{ item.pointC }}</el-radio>
+                    <el-radio label="D">{{ item.pointD }}</el-radio>
                   </el-radio-group>
                 </div>
               </div>
             </div>
             <!-- 填空 -->
-            <div v-for="(item, index) in blankTopicsList" :key="item.topicId" class="q-fill-in">
+            <div v-for="(item, index) in blankList" :key="index" class="q-fill-in">
               <br>
               <div slot="header" class="clearfix">
-                <span style="font-family: 幼圆; font-size: 17px">第{{ item.topicId }}题 ({{ item.topicType }}):</span>
+                <span style="font-family: 幼圆; font-size: 17px">填空题 第({{ index + 1 }})题:</span>
               </div>
               <div class="question" style="font-family: 幼圆; font-size: 18px">
                 {{ item.detail }}
@@ -40,7 +37,7 @@
               <div class="answer">
                 <div class="answer-item">
                   <el-input
-                    v-model="clientBlankAnswer[index]"
+                    v-model="blankAnswer[index]"
                     :rows="2"
                     placeholder="请输入答案"
                     style="font-size: 17px; font-family: 幼圆"
@@ -52,29 +49,29 @@
             </div>
 
             <!-- 判断 -->
-            <div v-for="(item, index) in judgeTopicsList" :key="item.topicId" class="q-true-or-false">
+            <div v-for="(item, index) in judgeList" :key="item.topicId" class="q-true-or-false">
               <br>
               <div slot="header" class="clearfix">
-                <span style="font-family: 幼圆; font-size: 17px">第{{ item.topicId }}题 ({{ item.topicType }}):</span>
+                <span style="font-family: 幼圆; font-size: 17px">判断题 第({{ index + 1 }})题:</span>
               </div>
               <div class="question" style="font-family: 幼圆; font-size: 18px">
                 {{ item.detail }}
               </div>
               <div class="answer">
                 <div class="answer-item">
-                  <el-radio-group v-model="clientJudgeAnswer[index]" style="font-family: 幼圆; font-size: 17px">
-                    <el-radio label="1">正确</el-radio>
-                    <el-radio label="0">错误</el-radio>
+                  <el-radio-group v-model="judgeAnswer[index]" style="font-family: 幼圆; font-size: 17px">
+                    <el-radio label="right">正确</el-radio>
+                    <el-radio label="wrong">错误</el-radio>
                   </el-radio-group>
                 </div>
               </div>
             </div>
 
             <!-- 简答 -->
-            <div v-for="(item, index) in subjectiveList" :key="item.topicId" class="q-short-answer">
+            <div v-for="(item, index) in essayList" :key="item.topicId" class="q-short-answer">
               <br>
               <div slot="header" class="clearfix">
-                <span style="font-family: 幼圆; font-size: 17px">第{{ item.topicId }}题 ({{ item.topicType }}):</span>
+                <span style="font-family: 幼圆; font-size: 17px">简答题 第({{ index + 1 }})题:</span>
               </div>
               <div class="question" style="font-family: 幼圆; font-size: 18px">
                 {{ item.detail }}
@@ -82,7 +79,7 @@
               <div class="answer">
                 <div class="answer-item">
                   <el-input
-                    v-model="clientSubjectiveAnswer[index]"
+                    v-model="essayAnswer[index]"
                     :rows="5"
                     placeholder="请输入答案"
                     style="font-size: 17px; font-family: 幼圆"
@@ -96,25 +93,71 @@
       </div>
     </div>
     <div class="submit-paper f-r">
-      <el-button round type="primary" @click="submitPaper">交卷</el-button>
+      <el-button round type="primary" @click="endExam">交卷</el-button>
     </div>
   </div>
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
   name: "startExam",
-
+  data() {
+    return {
+      selectList: [],
+      blankList: [],
+      judgeList: [],
+      essayList: [],
+      selectAnswer: [],
+      blankAnswer: [],
+      judgeAnswer: [],
+      essayAnswer: []
+    }
+  },
   methods: {
     startExam() {
       this.axios({
         method: 'get',
-        url: ''
+        // url: '/examStudent/getExam/' + 22053111
+        url: '/examStudent/getExam/' + this.$route.params.examId
+      }).then(res => {
+        console.log(res)
+        this.selectList = res.data.data.select
+        this.blankList = res.data.data.blank
+        this.judgeList = res.data.data.judge
+        this.essayList = res.data.data.essay
+      })
+    },
+    endExam() {
+      this.axios({
+        method: 'post',
+        url: '/examStudent/endExam',
+        data: {
+          userId: this.userId,
+          examId: this.$route.params.examId,
+          selectAnswer: this.selectAnswer,
+          blankAnswer: this.blankAnswer,
+          judgeAnswer: this.judgeAnswer,
+          essayAnswer: this.essayAnswer
+        }
+      }).then(res => {
+        if (res.data.code == '200') {
+          this.$message.info('交卷成功！')
+          this.$router.replace('/exam')
+        }
+      }).then(err => {
+        console.log(err)
       })
     }
   },
   created() {
-
+    this.startExam()
+  },
+  computed: {
+    ...mapGetters([
+      'userId'
+    ])
   }
 }
 </script>

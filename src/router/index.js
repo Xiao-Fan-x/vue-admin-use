@@ -99,38 +99,38 @@ export const constantRoutes = [
       name: '首页',
       component: () => import('@/views/dashboard/teacher/dashboard'),
       meta: {
-        title: '教师首页',
+        title: '首页',
         icon: 'dashboard',
-        affix: true,
+        affix: false,
         roles: ['teacher', 'student']
       }
     }]
   },
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/student/index',
-    meta: {
-      roles: ['teacher', 'student']
-    },
-    children: [{
-      path: 'student/index',
-      name: '首页',
-      component: () => import('@/views/dashboard/student/dashboard'),
-      meta: {
-        title: '学生首页',
-        icon: 'dashboard',
-        affix: true,
-        roles: ['teacher', 'student']
-      }
-    }]
-  },
+  // {
+  //   path: '/',
+  //   component: Layout,
+  //   redirect: '/student/index',
+  //   meta: {
+  //     roles: ['student']
+  //   },
+  //   children: [{
+  //     path: 'student/index',
+  //     name: '首页',
+  //     component: () => import('@/views/dashboard/student/dashboard'),
+  //     meta: {
+  //       title: '学生首页',
+  //       icon: 'dashboard',
+  //       affix: false,
+  //       roles: ['student']
+  //     }
+  //   }]
+  // },
   {
     path: '/upload',
     component: Layout,
     redirect: '/upload/student',
     meta: {
-      roles: ['teacher', 'student']
+      roles: ['teacher']
     },
     children: [{
       path: 'student',
@@ -140,7 +140,7 @@ export const constantRoutes = [
         title: '学生上传',
         icon: 'dashboard',
         // affix: true,
-        roles: ['teacher', 'student']
+        roles: ['teacher']
       }
     }]
   },
@@ -149,7 +149,7 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/createExam/index',
     meta: {
-      roles: ['teacher', 'student']
+      roles: ['teacher']
     },
     children: [{
       path: 'index',
@@ -159,7 +159,7 @@ export const constantRoutes = [
         title: '创建考核',
         icon: 'dashboard',
         // affix: true,
-        roles: ['teacher', 'student']
+        roles: ['teacher']
       }
     }]
   },
@@ -168,7 +168,7 @@ export const constantRoutes = [
     component: Layout,
     // redirect: '/upload/index',
     meta: {
-      roles: ['teacher', 'student']
+      roles: ['teacher']
     },
     children: [{
       path: 'index',
@@ -177,7 +177,7 @@ export const constantRoutes = [
       meta: {
         title: '题目上传',
         icon: 'dashboard',
-        roles: ['teacher', 'student']
+        roles: ['teacher']
       }
     }]
   },
@@ -185,7 +185,7 @@ export const constantRoutes = [
     path: '/teacher',
     component: Layout,
     meta: {
-      roles: ['teacher', 'student']
+      roles: ['teacher']
     },
     children:
       [{
@@ -196,7 +196,7 @@ export const constantRoutes = [
           title: '学生管理',
           icon: 'form',
           noCache: true,
-          roles: ['teacher', 'student']
+          roles: ['teacher']
         }
       }]
   },
@@ -204,7 +204,7 @@ export const constantRoutes = [
     path: '/student',
     component: Layout,
     meta: {
-      roles: ['teacher', 'student']
+      roles: ['student']
     },
     children:
       [{
@@ -215,7 +215,26 @@ export const constantRoutes = [
           title: '学生考核',
           icon: 'form',
           noCache: true,
-          roles: ['teacher', 'student']
+          roles: ['student']
+        }
+      }]
+  },
+  {
+    path: '/student',
+    component: Layout,
+    meta: {
+      roles: ['student']
+    },
+    children:
+      [{
+        path: '/coding',
+        name: 'coding',
+        component: () => import('@/views/dashboard/student/Coding'),
+        meta: {
+          title: '编程测试',
+          icon: 'form',
+          noCache: true,
+          roles: ['student']
         }
       }]
   },
@@ -223,7 +242,7 @@ export const constantRoutes = [
     path: '/exam',
     component: Layout,
     meta: {
-      roles: ['teacher', 'student']
+      roles: ['student']
     },
     hidden: true,
     children:
@@ -235,7 +254,7 @@ export const constantRoutes = [
           title: '考核页面',
           icon: 'form',
           noCache: true,
-          roles: ['teacher', 'student']
+          roles: ['student']
         },
       }]
   },
@@ -247,32 +266,32 @@ export const constantRoutes = [
     meta: {
       title: '查看题库',
       icon: 'el-icon-s-help',
-      roles: ['teacher', 'student']
+      roles: ['teacher']
     },
     children: [
       {
         path: 'select',
         name: '选择题',
         component: () => import('@/views/table/Select'),
-        meta: {title: '选择题', icon: 'table', roles: ['teacher', 'student']}
+        meta: {title: '选择题', icon: 'table', roles: ['teacher']}
       },
       {
         path: 'blank',
         name: '填空题',
         component: () => import('@/views/table/Blank'),
-        meta: {title: '填空题', icon: 'table', roles: ['teacher', 'student']}
+        meta: {title: '填空题', icon: 'table', roles: ['teacher']}
       },
       {
         path: 'judge',
         name: '判断题',
-        component: () => import('@/views/table/index'),
-        meta: {title: '判断题', icon: 'table', roles: ['teacher', 'student']}
+        component: () => import('@/views/table/Judge'),
+        meta: {title: '判断题', icon: 'table', roles: ['teacher']}
       },
       {
         path: 'essay',
         name: '简答题',
-        component: () => import('@/views/table/index'),
-        meta: {title: '简答题', icon: 'table', roles: ['teacher', 'student']}
+        component: () => import('@/views/table/Essay'),
+        meta: {title: '简答题', icon: 'table', roles: ['teacher']}
       },
     ]
   },

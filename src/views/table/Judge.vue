@@ -1,21 +1,8 @@
 <template>
   <div class="context">
-    <div class="crumbs" style="font-size: 22px;margin-bottom: 10px">
-      用户信息管理
-    </div>
     <div class="container">
       <div class="handle-box">
-        <el-button
-          class="handle-del mr10"
-          icon="el-icon-delete"
-          type="primary"
-          @click="delAllSelection"
-        >批量删除
-        </el-button>
-        <el-select v-model="examOption.grade" class="handle-select mr10" clearable placeholder="请选择年级">
-          <el-option v-for="(item,index) in classInfor" :key="index" :label="item.grade"
-                     :value="item.grade"></el-option>
-        </el-select>
+
         <el-select v-model="examOption.department" class="handle-select mr10" clearable placeholder="请选择系别">
           <el-option v-for="(item,index) in classInfor" :key="index" :label="item.department"
                      :value="item.department"></el-option>
@@ -24,23 +11,12 @@
           <el-option v-for="(item,index) in classInfor" :key="index" :label="item.major"
                      :value="item.major"></el-option>
         </el-select>
-        <el-select v-model="examOption.className" class="handle-select mr10" clearable placeholder="请选择班级">
-          <el-option v-for="(item,index) in classInfor" :key="index" :label="item.className"
-                     :value="item.className"></el-option>
+        <el-select v-model="examOption.subject" class="handle-select mr10" clearable placeholder="请选择学科">
+          <el-option v-for="(item,index) in classInfor" :key="index" :label="item.subject"
+                     :value="item.subject"></el-option>
         </el-select>
 
-        <!--        <el-select v-model="query.department" class="handle-select mr10" placeholder="系别">-->
-        <!--          <el-option key="1" label="机械工程系" value="机械工程系"/>-->
-        <!--          <el-option key="2" label="信息工程系" value="信息工程系"/>-->
-        <!--          <el-option key="3" label="计算机科学与技术系" value="计算机科学与技术系"/>-->
-        <!--          <el-option key="4" label="建筑系" value="建筑系"/>-->
-        <!--          <el-option key="5" label="管理系" value="管理系"/>-->
-        <!--          <el-option key="6" label="文学与文法系" value="文学与文法系"/>-->
-        <!--          <el-option key="7" label="建筑工程系" value="建筑工程系"/>-->
-        <!--          <el-option key="8" label="化工系" value="化工系"/>-->
-        <!--          <el-option key="9" label="艺术系" value="艺术系"/>-->
-        <!--        </el-select>-->
-        <el-input v-model="examOption.userName" class="handle-input mr10" placeholder="用户名/学号"/>
+        <el-input v-model="examOption.userName" class="handle-input mr10" placeholder="关键词"/>
         <el-button icon="el-icon-search" type="primary" @click="getData">搜索</el-button>
       </div>
 
@@ -52,32 +28,29 @@
         header-cell-class-name="table-header"
         @selection-change="handleSelectChange"
       >
-        <el-table-column align="center" type="selection" width="55"/>
-        <el-table-column align="center" label="ID" prop="userId" width="110px"/>
-        <el-table-column align="center" label="用户名" prop="userName"/>
-        <el-table-column align="center" label="角色" prop="role"/>
-        <el-table-column align="center" label="学号或教师号" prop="phone" width="110"/>
-        <el-table-column align="center" label="年级" prop="grade"/>
+        <el-table-column align="center" label="题目" prop="detail" width="500"/>
+        <el-table-column align="center" label="答案" prop="answer"/>
         <el-table-column align="center" label="系别" prop="department"/>
         <el-table-column align="center" label="专业" prop="major"/>
-        <el-table-column align="center" label="班级" prop="className"/>
-        <el-table-column align="center" label="操作" width="180">
-          <template slot-scope="scope">
-            <el-button
-              icon="el-icon-edit"
-              type="text"
-              @click="handleEdit(scope.$index, scope.row)"
-            >编辑
-            </el-button>
-            <el-button
-              class="red"
-              icon="el-icon-delete"
-              type="text"
-              @click="handleDelete(scope.$index, scope.row)"
-            >删除
-            </el-button>
-          </template>
-        </el-table-column>
+        <el-table-column align="center" label="解析" prop="analysis"/>
+
+<!--        <el-table-column align="center" label="操作" width="180">-->
+<!--          <template slot-scope="scope">-->
+<!--            <el-button-->
+<!--              icon="el-icon-edit"-->
+<!--              type="text"-->
+<!--              @click="handleEdit(scope.$index, scope.row)"-->
+<!--            >编辑-->
+<!--            </el-button>-->
+<!--            <el-button-->
+<!--              class="red"-->
+<!--              icon="el-icon-delete"-->
+<!--              type="text"-->
+<!--              @click="handleDelete(scope.$index, scope.row)"-->
+<!--            >删除-->
+<!--            </el-button>-->
+<!--          </template>-->
+<!--        </el-table-column>-->
       </el-table>
     </div>
 
@@ -131,7 +104,7 @@
 
 <script>
 export default {
-  name: 'UserManege',
+  name: 'Judge',
   data() {
     return {
       classInfor: [],
@@ -181,13 +154,12 @@ export default {
     getData() {
       this.axios({
         method: 'post',
-        url: '/studentManager/search',
+        url: '/teacher/judge',
         data: {
-          grade: this.examOption.grade,
           department: this.examOption.department,
           major: this.examOption.major,
-          className: this.examOption.className,
-          userName: this.examOption.userName,
+          subject: this.examOption.subject,
+          detail: this.examOption.detail,
           page: 1
         }
       }).then(res => {

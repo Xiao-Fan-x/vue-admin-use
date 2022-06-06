@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 /* Layout */
 import Layout from '@/layout'
-import fa from "element-ui/src/locale/lang/fa";
 
 Vue.use(Router)
 
@@ -51,11 +50,11 @@ export const constantRoutes = [
   },
 
   // 登陆 注册
-  {
-    path: '/login',
-    component: () => import('@/views/login/index'),
-    hidden: true
-  },
+  // {
+  //   path: '/login',
+  //   component: () => import('@/views/login/index'),
+  //   hidden: true
+  // },
   {
     path: '/login2',
     name: 'login',
@@ -68,26 +67,6 @@ export const constantRoutes = [
     component: () => import('@/views/login/register'),
     hidden: false
   },
-
-  // {
-  //   path: '/',
-  //   component: Layout,
-  //   redirect: '/login',
-  //   meta: {
-  //     roles: ['teacher', 'student']
-  //   },
-  //   children: [{
-  //     path: 'dashboard',
-  //     name: 'Dashboard',
-  //     component: () => import('@/views/dashboard/index'),
-  //     meta: {
-  //       title: 'Dashboard',
-  //       icon: 'dashboard',
-  //       affix: true,
-  //       roles: ['teacher', 'student']
-  //     }
-  //   }]
-  // },
   {
     path: '/',
     component: Layout,
@@ -107,25 +86,7 @@ export const constantRoutes = [
       }
     }]
   },
-  // {
-  //   path: '/',
-  //   component: Layout,
-  //   redirect: '/student/index',
-  //   meta: {
-  //     roles: ['student']
-  //   },
-  //   children: [{
-  //     path: 'student/index',
-  //     name: '首页',
-  //     component: () => import('@/views/dashboard/student/dashboard'),
-  //     meta: {
-  //       title: '学生首页',
-  //       icon: 'dashboard',
-  //       affix: false,
-  //       roles: ['student']
-  //     }
-  //   }]
-  // },
+
   {
     path: '/upload',
     component: Layout,
@@ -296,67 +257,6 @@ export const constantRoutes = [
       },
     ]
   },
-
-  // {
-  //   path: '/nested',
-  //   component: Layout,
-  //   redirect: '/nested/menu1',
-  //   name: 'Nested',
-  //   meta: {
-  //     title: 'Nested',
-  //     icon: 'nested'
-  //   },
-  //   children: [
-  //     {
-  //       path: 'menu1',
-  //       component: () => import('@/views/nested/menu1/index'), // Parent router-view
-  //       name: 'Menu1',
-  //       meta: {title: 'Menu1'},
-  //       children: [
-  //         {
-  //           path: 'menu1-1',
-  //           component: () => import('@/views/nested/menu1/menu1-1'),
-  //           name: 'Menu1-1',
-  //           meta: {title: 'Menu1-1'}
-  //         },
-  //         {
-  //           path: 'menu1-2',
-  //           component: () => import('@/views/nested/menu1/menu1-2'),
-  //           name: 'Menu1-2',
-  //           meta: {title: 'Menu1-2'},
-  //           children: [
-  //             {
-  //               path: 'menu1-2-1',
-  //               component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-  //               name: 'Menu1-2-1',
-  //               meta: {title: 'Menu1-2-1'}
-  //             },
-  //             {
-  //               path: 'menu1-2-2',
-  //               component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-  //               name: 'Menu1-2-2',
-  //               meta: {title: 'Menu1-2-2'}
-  //             }
-  //           ]
-  //         },
-  //         {
-  //           path: 'menu1-3',
-  //           component: () => import('@/views/nested/menu1/menu1-3'),
-  //           name: 'Menu1-3',
-  //           meta: {title: 'Menu1-3'}
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       path: 'menu2',
-  //       component: () => import('@/views/nested/menu2/index'),
-  //       name: 'Menu2',
-  //       meta: {title: 'menu2'}
-  //     }
-  //   ]
-  // },
-
-
   {
     path: '/404',
     component: () => import('@/views/404'),

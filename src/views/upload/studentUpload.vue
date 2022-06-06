@@ -5,7 +5,7 @@
       <div class="content-title">上传学生信息</div>
       <div class="plugins-tips">
         以指定格式上传.
-        <el-link @click="downloadStudentTemp()" style="font-size: 16px">点击此处下载格式规范.</el-link>
+        <el-link style="font-size: 16px" @click="downloadStudentTemp()">点击此处下载格式规范.</el-link>
         只能上传xls或xlsx格式!
       </div>
       <div>
@@ -43,7 +43,7 @@ export default {
   methods: {
     downloadStudentTemp() {
       this.axios({
-        method: 'post',
+        method: 'get',
         url: '/upload/studentTemp',
         responseType: 'blob'
       }).then(res => {
@@ -51,7 +51,7 @@ export default {
         const blob = new Blob([res.data], {type: 'multipary/form-data'})
         link.style.display = 'none'
         link.href = URL.createObjectURL(blob)
-        link.setAttribute('download', decodeURI('选择题模板.xlsx'))
+        link.setAttribute('download', decodeURI('学生模板.xlsx'))
         document.body.appendChild(link)
         link.click()
         document.body.removeChild(link)

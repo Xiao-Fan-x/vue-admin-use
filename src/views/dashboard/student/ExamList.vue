@@ -17,6 +17,7 @@
         <el-table-column align="center" label="测试名称" prop="examName"></el-table-column>
         <el-table-column align="center" label="开始时间" prop="startTime"></el-table-column>
         <el-table-column align="center" label="结束时间" prop="endTime"></el-table-column>
+        <el-table-column align="center" label="分数" prop="score"></el-table-column>
         <el-table-column align="center" label="操作" width="240">
           <template slot-scope="scope">
             <!--            <el-button-->

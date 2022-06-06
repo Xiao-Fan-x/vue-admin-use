@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 /* Layout */
 import Layout from '@/layout'
+import fa from "element-ui/src/locale/lang/fa";
 
 Vue.use(Router)
 
@@ -195,7 +196,7 @@ export const constantRoutes = [
         meta: {
           title: '学生管理',
           icon: 'form',
-          noCache: true,
+          noCache: false,
           roles: ['teacher']
         }
       }]
@@ -214,7 +215,7 @@ export const constantRoutes = [
         meta: {
           title: '学生考核',
           icon: 'form',
-          noCache: true,
+          noCache: false,
           roles: ['student']
         }
       }]
@@ -233,7 +234,7 @@ export const constantRoutes = [
         meta: {
           title: '编程测试',
           icon: 'form',
-          noCache: true,
+          noCache: false,
           roles: ['student']
         }
       }]
@@ -253,7 +254,7 @@ export const constantRoutes = [
         meta: {
           title: '考核页面',
           icon: 'form',
-          noCache: true,
+          noCache: false,
           roles: ['student']
         },
       }]

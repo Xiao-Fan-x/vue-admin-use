@@ -119,7 +119,9 @@ export default {
     startExam() {
       this.axios({
         method: 'get',
-        // url: '/examStudent/getExam/' + 22053111
+        headers: {
+          token: this.$store.getters.token
+        },
         url: '/examStudent/getExam/' + this.$route.params.examId
       }).then(res => {
         console.log(res)
